@@ -40,10 +40,9 @@ var AddMovieToHtml= function(movieObject){
         '<div class="description">' + movieObject.mYear + '</div>' +
       '</div>' +
       '<div class="extra content" id="VoteResult">' +
-        '<div class="meta">VotePlease T-T</div>'+
         '<div class="ui two buttons">' + 
-          '<div id="VoteUp" class="ui green button">Watch</div>'+
-          '<div class="ui red button" id="VoteDown">Ignore</div>'+
+          '<div id="VoteUp" class="ui inverted green button"><i class="thumbs up icon"></i></div>'+
+          '<div class="ui inverted red button" id="VoteDown"><i class="thumbs down icon"></i></div>'+
         '</div>'+
       '</div>'+
     '</div>'
@@ -445,10 +444,10 @@ var callSignUpFunction = function(){
                     contentType: 'application/json',
                     url: 'http://localhost:3000/addmovies',            
                     success: function(data) {
-                                    console.log('success');
-                                    console.log(jsonStr);
-                                    console.log(JSON.stringify(data));
-                                    console.log(data);
+                                    // console.log('success');
+                                    // console.log(jsonStr);
+                                    // console.log(JSON.stringify(data));
+                                    // console.log(data);
                                     $('.result3').html(data);
                                     $('.addmovie_form').trigger('reset');
                                     // $('.addmovie_modal').modal('hide');
@@ -516,6 +515,7 @@ var callShowMoviesFor1User = function(jsonStr){
 	        									ListArray.push(data.movieList[data.movieList.length-1].movieName);
 	        									// $result = $('<div class='+"'ui blue segment'"+'>').
 	                 //                    		text(data.movieList[data.movieList.length-1].movieName);
+
 												$('.movie_seg').append('<div class='+"'ui blue segment'"+'>'+
 													data.movieList[data.movieList.length-1].movieName +
 													'<div class='+'"ui right floated span"'+'><i class='+"'thumbs up icon'"+'></i>'+data.movieList[data.movieList.length-1].mUpVote+

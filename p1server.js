@@ -139,7 +139,12 @@ app.post('/addmovies', function(req, res){
 	request(movieParameterString, function(error, response, body){
 		if(!error && response.statusCode == 200) {
 			omdbResponse = JSON.parse(body);
-			MovieDb.findOne({movieName: req.body.movieName}).exec(function(err, movie){
+			if(omdbResponse.Response == "False"){
+				console.log('Not found in OMDb');
+				res.json('Not Found in OMDb');
+			}
+			else{
+				MovieDb.findOne({movieName: req.body.movieName}).exec(function(err, movie){
 				if(!movie){
 					var m1 = new MovieDb({
 											movieName: req.body.movieName, 
@@ -157,7 +162,7 @@ app.post('/addmovies', function(req, res){
 						}
 						else{
 							console.log('movie added successfully');
-							res.json(body);
+							res.json(omdbResponse.Title + ' was added successfully to your List');
 						}
 					});
 				}
@@ -190,11 +195,13 @@ app.post('/addmovies', function(req, res){
 					}
 					
 				}
-			});
+				});
+			}
+
 		}//endif
 		else{
-			console.log('Movie not found in OMDB');
-			res.json('Movie not found in OMDB');
+			console.log('No response from OMDB');
+			res.json('No response from OMDB');
 		}
 	});
 });
@@ -276,7 +283,7 @@ app.post('/showMoviesFor1User', function(req,res) {
 	console.log('in get all movies for 1 user');
 	UserDb.findOne({_id: req.body.userID}).exec(function(err, user){
 		
-					MovieDb.find({mUserId:user._id},{movieName:1,mUpVote:1,mDownVote:1,_id:0},function(err, movies) {
+					MovieDb.find({mUserId:user._id},{movieName:1,mUpVote:1,mDownVote:1,mPosterUrl:1, _id:0},function(err, movies) {
 					    if (err) {
 					      // onErr(err, callback);
 					      console.log('error!!!!');
