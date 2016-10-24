@@ -142,12 +142,12 @@ app.post('/addmovies', function(req, res){
 			MovieDb.findOne({movieName: req.body.movieName}).exec(function(err, movie){
 				if(!movie){
 					var m1 = new MovieDb({
-											movieName: req.body.movieName, 
-											mUpVote: 0,
-											mDownVote: 0,
-											mTitle: omdbResponse.Title,
-											mYear: omdbResponse.Year,
-											mPosterUrl: omdbResponse.Poster 
+									movieName: req.body.movieName, 
+									mUpVote: 0,
+									mDownVote: 0,
+									mTitle: omdbResponse.Title,
+									mYear: omdbResponse.Year,
+									mPosterUrl: omdbResponse.Poster 
 										});
 					m1.mUserId.push(uName);
 					m1.save(function(err, result) {
